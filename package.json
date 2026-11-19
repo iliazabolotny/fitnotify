@@ -1,5 +1,5 @@
 {
-  "name": "fit-reminders",
+  "name": "fit-notify",
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
@@ -7,7 +7,8 @@
     "expo-status-bar": "~58.0.5",
     "nativewind": "^2.0.0-next.65",
     "react": "19.3.0",
-    "react-native": "0.88.1"
+    "react-native": "0.88.1",
+    "react-native-safe-area-context": "~5.11.1"
   },
   "devDependencies": {
     "@types/react": "~19.3.0",

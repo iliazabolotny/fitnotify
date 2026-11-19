@@ -5,8 +5,9 @@ import Layout from "../../layout/Layout";
 const Main: FC = ()=> {
     return (
         <Layout>
-            <Text className="text'xl text-primary">FIT Reminders</Text>
-            <Text>Main</Text>
+            <View className="items-center">
+                <Text className="text-3xl text-primary">FIT Notify</Text>
+            </View>
         </Layout>
     )
 }
