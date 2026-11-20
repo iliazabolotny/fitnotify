@@ -1,13 +1,13 @@
-import { FC } from "react";
-import {Text, View} from "react-native";
-import Layout from "../../layout/Layout";
+import { FC } from "react"
+import Layout from "../../layout/Layout"
+import ExerciseList from "./exersices/ExerciseList"
+import Logo from "./exersices/Logo"
 
 const Main: FC = ()=> {
     return (
         <Layout>
-            <View className="items-center">
-                <Text className="text-3xl text-primary">FIT Notify</Text>
-            </View>
+            <Logo />
+            <ExerciseList />
         </Layout>
     )
 }

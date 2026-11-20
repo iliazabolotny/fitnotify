@@ -1,10 +1,18 @@
-import { FC, PropsWithChildren } from 'react';
-import {SafeAreaView, View} from 'react-native';
 
-const Layout: FC<PropsWithChildren<unknown>> = ({children}) => {
-    return (<SafeAreaView className='flex-1 bg-[#E9D1AF]'>
-            <View>{children}</View>
-        </SafeAreaView>)
+import { FC, PropsWithChildren } from 'react'
+import { View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+
+const Layout: FC<PropsWithChildren> = ({ children }) => {
+
+    return (
+        <SafeAreaView
+            className="flex-1  bg-[#F2F2F2]">
+            <View>
+                {children}
+            </View>
+        </SafeAreaView>
+    )
 }
 
-export default Layout;
+export default Layout
