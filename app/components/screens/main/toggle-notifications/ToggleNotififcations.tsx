@@ -1,53 +1,58 @@
-import {FC} from 'react'
+import { FC, useState } from 'react'
 import * as Notifications from 'expo-notifications'
 import { Pressable, View, Text, Alert } from 'react-native'
+import Constants from 'expo-constants'
 
 Notifications.setNotificationHandler({
-    handleNotification: async()=>({
+    handleNotification: async () => ({
         shouldShowAlert: true,
-        shouldPlayground: true,
-        shouldSetBadge: true,
         shouldShowBanner: true,
+        shouldShowList: true,
         shouldPlaySound: true,
-        shouldShowList: true
-    })
+        shouldSetBadge: true,
+    }),
 })
 
 async function schedulePushNotification() {
-    try {
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                title: 'FIT Notification',
+                body: 'Your notification is working!',
+                data: {data: 'FIT Notification'}
+            },
+            trigger: {
+                type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+                seconds: 1,
+            },
+        })
+}
+
+async function registerNotifications() {
+        try {
         const { status } = await Notifications.requestPermissionsAsync()
 
         if (status !== 'granted') {
             Alert.alert('Permission denied', 'Enable notifications in settings.')
             return
         }
-
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: 'FIT Notification',
-                body: 'Your notification is working!',
-            },
-            trigger: {
-                type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-                seconds: 10,
-            },
-        })
-
-        Alert.alert('Success', 'Notification scheduled for 8 seconds.')
-
     } catch (error) {
-        console.error('Notification error:', error)
         Alert.alert('Notification Error', String(error))
     }
 }
 
 const ToggleNotificaitons: FC = () => {
+    const [notificationsEnabled, setNotificationsEnabled] = useState<boolean>(false);
     
     return (
         <View className='items-center mt-6'>
             <Pressable
             onPress={async()=>{
-                await schedulePushNotification()
+                if (!notificationsEnabled) {
+                    setNotificationsEnabled(true);
+                    registerNotifications();
+                } else {
+                     await schedulePushNotification()
+                }
             }}
              className='bg-primary bg-[#4B3621] px-5 py-3 rounded'>
                 <Text className='text-xl text-white font-medium'>Enable Notifications</Text>
