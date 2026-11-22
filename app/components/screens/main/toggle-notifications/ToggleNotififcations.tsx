@@ -1,6 +1,6 @@
 import {FC} from 'react'
 import * as Notifications from 'expo-notifications'
-import { Pressable, View, Text, Alert, Platform } from 'react-native'
+import { Pressable, View, Text, Alert } from 'react-native'
 
 Notifications.setNotificationHandler({
     handleNotification: async()=>({
@@ -14,41 +14,31 @@ Notifications.setNotificationHandler({
 })
 
 async function schedulePushNotification() {
-    if (Platform.OS === 'android') {
-        await Notifications.setNotificationChannelAsync('default', {
-            name: 'Default',
-            importance: Notifications.AndroidImportance.MAX,
-        })
-    }
+    try {
+        const { status } = await Notifications.requestPermissionsAsync()
 
-    const { status: existingStatus } =
-        await Notifications.getPermissionsAsync()
-
-    let finalStatus = existingStatus
-
-    if (existingStatus !== 'granted') {
-        const { status } =
-            await Notifications.requestPermissionsAsync()
-
-        finalStatus = status
-    }
-
-    if (finalStatus !== 'granted') {
-        Alert.alert('Permission denied', 'Enable notifications in settings.')
-        return
-    }
-
-    await Notifications.scheduleNotificationAsync({
-        content: {
-            title: 'FIT Notification',
-            body: 'FIT Notification',
-            sound: true
-        },
-        trigger: {
-            type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-            seconds: 8,
+        if (status !== 'granted') {
+            Alert.alert('Permission denied', 'Enable notifications in settings.')
+            return
         }
-    })
+
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                title: 'FIT Notification',
+                body: 'Your notification is working!',
+            },
+            trigger: {
+                type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+                seconds: 10,
+            },
+        })
+
+        Alert.alert('Success', 'Notification scheduled for 8 seconds.')
+
+    } catch (error) {
+        console.error('Notification error:', error)
+        Alert.alert('Notification Error', String(error))
+    }
 }
 
 const ToggleNotificaitons: FC = () => {
