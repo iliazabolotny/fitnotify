@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import * as Notifications from 'expo-notifications'
 import { Pressable, View, Text, Alert } from 'react-native'
-import Constants from 'expo-constants'
+import { randomExercise } from '../../../../../helpers/random'
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -16,14 +16,10 @@ Notifications.setNotificationHandler({
 async function schedulePushNotification() {
         await Notifications.scheduleNotificationAsync({
             content: {
-                title: 'FIT Notification',
-                body: 'Your notification is working!',
-                data: {data: 'FIT Notification'}
+                title: 'Сделай сейчас!',
+                body: randomExercise(),
             },
-            trigger: {
-                type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-                seconds: 1,
-            },
+            trigger: null,
         })
 }
 
@@ -55,7 +51,7 @@ const ToggleNotificaitons: FC = () => {
                 }
             }}
              className='bg-primary bg-[#4B3621] px-5 py-3 rounded'>
-                <Text className='text-xl text-white font-medium'>Enable Notifications</Text>
+                <Text className='text-xl text-white font-medium'>{notificationsEnabled ? 'Выбрать' : 'Разрешить нотификации'}</Text>
             </Pressable>
         </View>
     )
