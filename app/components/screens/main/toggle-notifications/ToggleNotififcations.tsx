@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import * as Notifications from 'expo-notifications'
 import { Pressable, View, Text, Alert } from 'react-native'
-import { randomExercise } from '../../../../../helpers/random'
+import { randomExercise } from '@/helpers/random'
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
